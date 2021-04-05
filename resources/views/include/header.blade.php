@@ -4,13 +4,13 @@
             <div class="row">
                 <div class="col-md-4 col-4">
                     <div class="main-header-logo">
-                        <a href="{{route('home.index')}}"><img width="130" src="{{asset('storage/'.$settings[2]->value)}}" alt="{{$settings[0]->value}} Logo"></a>
+                        <a href="{{route('home.index')}}"><img width="130" src="{{asset('storage/'.setting('site.logo'))}}" alt="{{setting('site.title')}} Logo"></a>
                     </div>
                 </div>
                 <div class="col-md-8 col-8">
                     <div class="right-header">
                         <div class="clearfix float-right contact-head">
-                            <a href="tel:1800-2345-5677">1800-2345-5677</a>
+                            <a href="tel:{{setting('site.phone')}}">{{setting('site.phone')}}</a>
                             <button class="btn-show navbar-toggler float-right btn-contact"><span class="ti-menu"></span></button>
                         </div>
                         <nav id="navigation" class="navigation mt-10">
@@ -21,7 +21,7 @@
                                 </div>
                                 <form>
                                     <div class="nav-search-inner">
-                                        <input type="search" name="search" placeholder="Type and hit ENTER"/>
+                                        <input type="search" name="search" placeholder="Arama Yap"/>
                                     </div>
                                 </form>
                             </div>

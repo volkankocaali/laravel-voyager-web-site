@@ -4,12 +4,13 @@
 <head>
 
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="{{$settings[1]->value}}">
+    <meta name="description" content="{{setting('site.description')}}">
     <meta name="author" content="">
-    <link rel="icon" href="img/favicon.ico">
+    <link rel="icon" href="{{asset('img/favicon.ico')}}">
 
-    <title>@yield('title') - {{$settings[0]->value}} </title>
+    <title>@yield('title') - {{ setting('site.title') }} </title>
 
 
 
@@ -38,29 +39,35 @@
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', '{{$settings[3]->value}}', 'auto');
+        ga('create', '{{setting('site.google_analytics_tracking_id')}}', 'auto');
         ga('send', 'pageview');
     </script>
 </head>
-
 <body>
 
 @include('include.loader')
 @include('include.navbar')
 @include('include.header')
-@include('include.slider')
+@if(Route::currentRouteName() == "home.index")
+    @include('include.slider')
+@elseif(Route::currentRouteName() == "home.contact")
+    @include('include.contact-bread')
+@else
+    @include('include.page-bread')
+@endif
+
 
 
 @yield('content')
 
 
-<footer class="dark-footer"  style="background-image: url(img/image-20.jpg);">
+<footer class="dark-footer"  style="background-image: url('img/image-20.jpg');">
     <div class="main-footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
                     <div class="footer-item">
-                        <img width="110" src="img/logo-white.png" alt="Logo">
+                        <img width="110" src="{{asset('img/logo-white.png')}}" alt="Logo">
                         <div class="mt-20 mb-20">
                             <button type="button" class="btn btn-1 btn-sm" data-toggle="modal" data-target="#newsletterModal">
                                 Newsletter signup
@@ -140,7 +147,7 @@
                     <p>@ 2018 VoyageTime</p>
                 </div>
                 <div class="col-md-6 text-r mobile-left">
-                    <p><img width="200" src="img/visa-mastercard-paypal.png" alt="Visa Mastercard Paypal"></p>
+                    <p><img width="200" src="{{asset('img/visa-mastercard-paypal.png')}}" alt="Visa Mastercard Paypal"></p>
                 </div>
             </div>
         </div>
@@ -163,29 +170,28 @@
 <!-- JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="js/vendor/jquery.min.js"></script>
-<script src="js/vendor/moment.js"></script>
-<script src="js/vendor/bootstrap.min.js"></script>
-<script src="js/vendor/bootstrap-slider.min.js"></script>
-<script src="js/vendor/cookies.js"></script>
-<script src="js/vendor/jquery.daterangepicker.min.js"></script>
-<script src="js/vendor/owl.carousel.min.js"></script>
-<script src="js/vendor/navigation.js"></script>
-<script src="js/vendor/modernizr.js"></script>
-<script src="js/vendor/jqueryvalidation.js"></script>
-<script src="js/vendor/jquery.viewbox.min.js"></script>
-<script src="js/vendor/masonry.min.js"></script>
-<script src="js/vendor/imagesloaded.js"></script>
-<script src="js/vendor/jquery.waypoints.min.js"></script>
-<script src="js/vendor/jquery.sticky-kit.min.js"></script>
+<script src="{{asset('js/vendor/jquery.min.js') }}"></script>
+<script src="{{ asset('js/vendor/moment.js') }}"></script>
+<script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/vendor/bootstrap-slider.min.js') }}"></script>
+<script src="{{asset('js/vendor/cookies.js')}}"></script>
+<script src="{{ asset('js/vendor/jquery.daterangepicker.min.js') }}"></script>
+<script src="{{ asset('js/vendor/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/vendor/navigation.js') }}"></script>
+<script src="{{ asset('js/vendor/modernizr.js') }}"></script>
+<script src="{{asset('js/vendor/jqueryvalidation.js')}}"></script>
+<script src="{{ asset('js/vendor/jquery.viewbox.min.js') }}"></script>
+<script src="{{ asset('js/vendor/masonry.min.js') }}"></script>
+<script src="{{ asset('js/vendor/imagesloaded.js') }}"></script>
+<script src="{{ asset('js/vendor/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('js/vendor/jquery.sticky-kit.min.js') }}"></script>
 
-<script src="js/main.js"></script>
+<script src="{{ asset('js/main.js') }}"></script>
 
-<script src="setting/jscolor.js"></script>
-<script src="setting/settings.js"></script>
+<script src="{{ asset('setting/jscolor.js') }}"></script>
+<script src="{{ asset('setting/settings.js') }}"></script>
 
 @yield('js')
 </body>
 
-<!-- Mirrored from abshar.by/VoyageTime/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 31 Mar 2021 19:40:49 GMT -->
 </html>

@@ -19,6 +19,7 @@ Route::get('/',[HomeController::class,'index'])->name('home.index');
 Route::get('/kategori/{slug}',[HomeController::class,'getCategory'])->name('home.category');
 Route::get('/sayfa/{category}/{slug}',[HomeController::class,'getPage'])->name('home.page');
 Route::get('/iletisim',[HomeController::class,'contact'])->name('home.contact');
+Route::post('/iletisim',[HomeController::class,'contactPost'])->name('home.contact.post');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
