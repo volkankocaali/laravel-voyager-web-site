@@ -15,16 +15,6 @@
                         </div>
                         <nav id="navigation" class="navigation mt-10">
                             <div class="nav-toggle">Menu</div>
-                            <div class="nav-search">
-                                <div class="nav-search-button">
-                                    <span class="ti-search"></span>
-                                </div>
-                                <form>
-                                    <div class="nav-search-inner">
-                                        <input type="search" name="search" placeholder="Arama Yap"/>
-                                    </div>
-                                </form>
-                            </div>
 
                             <div class="nav-menus-wrapper">
                                 <ul class="nav-menu align-to-right">
@@ -41,6 +31,8 @@
                                         </li>
                                     @endforeach
 
+                                    <li><a href="{{route('home.all.tour')}}">Seferler</a></li>
+                                    <li><a href="{{route('home.all.blog')}}">Blog</a></li>
                                     <li><a href="{{route('home.contact')}}">İletişim</a></li>
                                 </ul>
                             </div>

@@ -52,6 +52,34 @@
     @include('include.slider')
 @elseif(Route::currentRouteName() == "home.contact")
     @include('include.contact-bread')
+@elseif(Route::currentRouteName() == "home.tour")
+    @php
+        $imageUrl = str_replace("\\","/",json_decode($data->image)[0]);
+    @endphp
+    <div class="page-head white-content">
+        <div class="height60vh parallax-container" style="background-image: url({{asset('storage/'.$imageUrl)}});">
+            <div class="page-head-wrap">
+                <div class="display-r">
+                    <div class="display-a">
+                        <div class="container">
+                            <div class="row justify-content-center animate" data-animation="fadeInUp" data-timeout="500">
+                                <div class="col-md-12">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="{{route('home.index')}}">Ana Sayfa</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page"><a href="{{route('home.all.tour')}}">Seferler</a></li>
+                                        </ol>
+                                    </nav>
+                                    <h1 class="big-title mt-60">@yield('title')</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @else
     @include('include.page-bread')
 @endif
@@ -67,72 +95,38 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="footer-item">
-                        <img width="110" src="{{asset('img/logo-white.png')}}" alt="Logo">
-                        <div class="mt-20 mb-20">
-                            <button type="button" class="btn btn-1 btn-sm" data-toggle="modal" data-target="#newsletterModal">
-                                Newsletter signup
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade bd-example-modal-sm" id="newsletterModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-sm" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="exampleModalLabel">Newsletter Signup</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form id="subscribe-form" class="form-block" novalidate="novalidate">
-                                                <div class="form-group mt-20 subscribe-form">
-                                                    <small id="emailHelp" class="form-text text-muted">Subscribe now and recieve a 50% discount on your next tour booking</small>
-                                                    <label>Email address</label>
-                                                    <input type="email" class="form-control" name="email" placeholder="Email">
-                                                </div>
-                                                <div class="mt-10 mb-10 float-right">
-                                                    <button type="button" class="btn btn-2 btn-sm" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-1 btn-sm">Sign Up</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                        <img width="110" src="{{asset('storage/'.setting('site.logo'))}}" alt="Logo">
 
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="footer-item">
                         <ul class="footer-menu">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Catalog</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="{{route('home.index')}}">Ana Sayfa</a></li>
+                            @foreach($categories as $item)
+                                <li><a href="{{route('home.category',$item->slug)}}">{{$item->name}}</a></li>
+                            @endforeach
+                            <li><a href="{{route('home.contact')}}">İletişim</a></li>
                         </ul>
-                        <p class="mt-30">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, aperiam consequuntur excepturi ab maiores reiciendis quo corporis maxime hic pariatur rerum deleniti deserunt aliquid modi, aliquam delectus veniam debitis molestiae.</p>
+                        <p class="mt-30">{{setting('site.footer')}}</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="footer-item">
                         <ul class="mb-20">
-                            <li>1800-2345-5677</li>
-                            <li class="mt-10"><a href="mailto:">info@voyagetime.com</a></li>
-                            <li class="mt-10">610 Broadway New York, NY 10012</li>
+                            <li>{{setting('site.phone')}}</li>
+                            <li class="mt-10"><a href="mailto:{{setting('site.mail')}}">{{setting('site.mail')}}</a></li>
+                            <li class="mt-10">{{setting('site.address')}}</li>
                         </ul>
 
                     </div>
 
                     <div class="footer-item">
                         <ul class="footer-social mt-20">
-                            <li><a target="_blank" href="#"><i class="fab fa-pinterest"></i></a></li>
-                            <li><a target="_blank" href="#"><i class="fab fa-facebook"></i></a></li>
-                            <li><a target="_blank" href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a target="_blank" href="#"><i class="fab fa-instagram"></i></a></li>
-                            <li><a target="_blank" href="#"><i class="fab fa-google-plus-g"></i></a></li>
-                            <li><a target="_blank" href="#"><i class="fab fa-tumblr"></i></a></li>
+                            @if(setting('site.facebook'))  <li><a target="_blank"  href="{{setting('site.facebook')}}"><span class="fab fa-facebook"></span></a></li> @endif
+                            @if(setting('site.instagram'))  <li><a target="_blank"  href="{{setting('site.instagram')}}"><span class="fab fa-twitter"></span></a></li> @endif
+                            @if(setting('site.twitter'))  <li><a target="_blank"  href="{{setting('site.twitter')}}"><span class="fab fa-instagram"></span></a></li> @endif
+                            @if(setting('site.youtube'))  <li><a target="_blank"  href="{{setting('site.youtube')}}"><span class="fab fa-youtube"></span></a></li> @endif
                         </ul>
 
                     </div>
@@ -144,11 +138,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>@ 2018 VoyageTime</p>
+                    <p>@ {{config('app.name')}}</p>
                 </div>
-                <div class="col-md-6 text-r mobile-left">
+                <!--<div class="col-md-6 text-r mobile-left">
                     <p><img width="200" src="{{asset('img/visa-mastercard-paypal.png')}}" alt="Visa Mastercard Paypal"></p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -162,7 +156,8 @@
 
 <!-- COOKIE MESSAGE -->
 <div id="cookie-message" class="alert alert-fixed text-center animate" role="alert" data-animation="fadeInUp" data-timeout="500">
-    <button type="button" id="cookie-btn" class="close" data-dismiss="alert" aria-label="Close"><i class="ti-close"></i></button>We use cookies to ensure that we give you the best experience on our website. If you continue to use this site we will assume that you are happy with it.
+    <button type="button" id="cookie-btn" class="close" data-dismiss="alert" aria-label="Close"><i class="ti-close"></i></button>
+    Sitemizde sunulan özelliklerin ve sitenin işleyişi için bazı çerezlerin kullanılması teknik olarak zorunludur. Diğer bazı çerezler de sitemizi geliştirmek ve bizim tarafımızdan veya yetkili hizmet sağlayıcılarımız tarafından size ilgi alanınıza göre reklamların sunulması amacıyla kullanılmaktadır. Detaylı bilgi için Gizlilik Politikası ve Çerez Politikasını inceleyebilirsiniz.
 </div>
 <!-- / COOKIE MESSAGE -->
 
@@ -191,6 +186,22 @@
 <script src="{{ asset('setting/jscolor.js') }}"></script>
 <script src="{{ asset('setting/settings.js') }}"></script>
 
+<script type="application/javascript">
+    $(document).ready(function(){
+        if (sessionStorage.getItem('cerez') != 1) {
+            $("#cookie-message").css("display","block");
+        }
+
+        $("#cookie-btn").click(function() {
+            sessionStorage.setItem('cerez', 0);
+            $("#cookie-message").css("display","none");
+        });
+        $("#cookie-message").click(function() {
+            sessionStorage.setItem('cerez', 1);
+            $("#cookie-message").css("display","block");
+        });
+    });
+</script>
 @yield('js')
 </body>
 
